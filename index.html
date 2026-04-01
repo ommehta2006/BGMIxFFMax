@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BGMI Free UC & FF Diamonds - #1 Game Store</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="shortcut icon" type="image/png" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">
+    <div class="logo-icon"><img src="assets/logo.png" alt="BGMI Free UC Logo"></div>
+    <div>
+      <div class="logo-text">BGMI Free UC</div>
+      <div class="logo-sub">BGMI · FREE FIRE · #1 STORE</div>
+    </div>
+  </div>
+  <div class="nav-actions">
+    <div class="nav-balance-box">Balance: <strong id="header-balance">₹0</strong></div>
+    <button class="nav-add-btn with-site-icon" onclick="openAddBalance()">+ Add</button>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-badge">🔥 BGMI + FREE FIRE STORE</div>
+    <h1>India's #1 Game Store 🎮</h1>
+    <p>Buy UC, FF Diamonds, Bundles, Royal Pass & More!</p>
+  </div>
+
+  <!-- GAME SELECTOR TABS -->
+  <div class="game-tabs">
+    <button class="game-tab active-bgmi" id="tab-bgmi" onclick="switchGame('bgmi')">🎮 BGMI / PUBG</button>
+    <button class="game-tab" id="tab-ff" onclick="switchGame('ff')">🔴 Free Fire</button>
+  </div>
+
+  <div class="notice" id="main-notice">⚡ Orders delivered within 5-30 minutes. Keep your game open!</div>
+
+  <div class="search-bar">
+    <input class="search-input" type="text" id="search-inp" placeholder="🔍 Search products..." oninput="searchProducts(this.value)" />
+  </div>
+
+  <!-- BGMI SECTION -->
+  <div id="bgmi-section">
+    <div class="cats" id="bgmi-cats">
+      <button class="cat-btn active" data-cat="all" onclick="filterCat('all',this,'bgmi')">All</button>
+      <button class="cat-btn" data-cat="uc" onclick="filterCat('uc',this,'bgmi')">💎 UC</button>
+      <button class="cat-btn" data-cat="royal" onclick="filterCat('royal',this,'bgmi')">👑 Royal Pass</button>
+      <button class="cat-btn" data-cat="bundle" onclick="filterCat('bundle',this,'bgmi')">🎁 Bundles</button>
+      <button class="cat-btn" data-cat="scene" onclick="filterCat('scene',this,'bgmi')">🎬 Scenes</button>
+      <button class="cat-btn" data-cat="gun" onclick="filterCat('gun',this,'bgmi')">🔫 Gun Skins</button>
+    </div>
+    <div class="section-title">🏆 BGMI Products <span class="badge">TOP DEALS</span></div>
+    <div class="product-grid" id="bgmi-grid"></div>
+  </div>
+
+  <!-- FREE FIRE SECTION -->
+  <div id="ff-section" style="display:none;">
+    <div class="ff-section-header">
+      <div class="ff-icon">💎</div>
+      <div>
+        <h3>Free Fire Diamonds</h3>
+        <p>Instant delivery · Lowest price guaranteed</p>
+      </div>
+    </div>
+    <div class="cats" id="ff-cats">
+      <button class="cat-btn ff-active" data-cat="all" onclick="filterCat('all',this,'ff')" style="background:var(--ff);color:#fff;border-color:var(--ff);">All</button>
+      <button class="cat-btn" data-cat="ffdiamond" onclick="filterCat('ffdiamond',this,'ff')">💎 Diamonds</button>
+      <button class="cat-btn" data-cat="ffpass" onclick="filterCat('ffpass',this,'ff')">👑 Elite Pass</button>
+      <button class="cat-btn" data-cat="ffbundle" onclick="filterCat('ffbundle',this,'ff')">🎁 FF Bundles</button>
+      <button class="cat-btn" data-cat="ffgun" onclick="filterCat('ffgun',this,'ff')">🔫 FF Guns</button>
+    </div>
+    <div class="section-title">🔴 Free Fire Products <span class="badge-ff">HOT DEALS</span></div>
+    <div class="product-grid" id="ff-grid"></div>
+  </div>
+</div>
+
+<!-- SPIN PAGE -->
+<div id="page-spin" class="page">
+  <div class="spin-page">
+    <div class="spin-head">
+      <div class="spin-game-tabs">
+        <button class="game-tab active-bgmi" id="spin-tab-bgmi" onclick="switchSpinGame('bgmi')">🎮 BGMI Spinner</button>
+        <button class="game-tab" id="spin-tab-ff" onclick="switchSpinGame('ff')">🔴 Free Fire Spinner</button>
+      </div>
+      <div class="spin-title" id="spin-title-text">🎰 BGMI UC Spinner</div>
+      <div class="spin-sub" id="spin-sub-text">First spin is free. Next spins use admin-set price.</div>
+    </div>
+
+    <div class="spin-account">
+      <div class="spin-account-item">
+        <span>User Account</span>
+        <strong id="spin-account-id">USER</strong>
+      </div>
+      <div class="spin-account-item">
+        <span>Available Balance</span>
+        <strong id="spin-balance">₹0</strong>
+      </div>
+      <div class="spin-account-item">
+        <span id="spin-currency-balance-label">UC Balance</span>
+        <strong id="spin-uc-balance">0 UC</strong>
+      </div>
+      <div class="spin-account-item">
+        <span>Free Spin</span>
+        <strong id="free-spin-status">Available</strong>
+      </div>
+      <div class="spin-account-item">
+        <span>Total Spins</span>
+        <strong id="spin-total-count">0</strong>
+      </div>
+      <div class="spin-account-item">
+        <span id="spin-total-currency-label">Total UC Won</span>
+        <strong id="spin-total-uc">0 UC</strong>
+      </div>
+    </div>
+
+    <div class="spin-wallet-controls">
+      <div class="form-group" style="margin:0;">
+        <label class="form-label">Add Balance Request (₹)</label>
+        <input class="form-input" type="number" id="spin-add-balance-input" min="100" value="100" />
+      </div>
+      <button class="add-btn with-site-icon" onclick="openAddBalanceFromSpin()">💰 Add Balance</button>
+      <button class="add-btn" id="spin-withdraw-btn" onclick="openWithdrawForm()">🏧 Withdraw UC</button>
+    </div>
+
+    <div class="spin-wheel-wrap">
+      <div class="spin-pointer"></div>
+      <div class="spin-wheel" id="spin-wheel">
+        <div class="spin-segment-labels" id="spin-segment-labels"></div>
+        <div class="spin-center">LUCK</div>
+      </div>
+    </div>
+
+    <div class="spin-controls">
+      <button class="submit-btn" id="spin-btn" onclick="spinWheel()">🎯 Spin Free</button>
+      <div class="spin-result" id="spin-result">Tap spin to win rewards.</div>
+    </div>
+
+    <div class="spin-legend-title">Reward Sections</div>
+    <div class="spin-legend" id="spin-legend"></div>
+  </div>
+</div>
+
+<!-- ORDERS PAGE -->
+<div id="page-orders" class="page">
+  <div style="padding:24px 16px 100px;">
+    <div style="font-family:'Baloo 2',sans-serif;font-size:22px;font-weight:800;margin-bottom:16px;">My Orders 📦</div>
+    <div id="orders-list"></div>
+  </div>
+</div>
+
+<!-- SUPPORT PAGE -->
+<div id="page-support" class="page">
+  <div class="info-section">
+    <div style="font-family:'Baloo 2',sans-serif;font-size:22px;font-weight:800;margin-bottom:16px;">Support & Info 💬</div>
+    <div class="info-card">
+      <div class="info-card-title">📞 Contact Us</div>
+      <div class="contact-form-wrap">
+        <div class="form-group">
+          <label class="form-label">👤 Name *</label>
+          <input class="form-input" type="text" id="contact-name" placeholder="Enter your name" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">📧 Email *</label>
+          <input class="form-input" type="email" id="contact-email" placeholder="Enter your email" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">📝 Message *</label>
+          <textarea class="form-input contact-textarea" id="contact-message" placeholder="Write your issue or question"></textarea>
+        </div>
+        <button class="submit-btn support-submit-btn" onclick="submitContactForm()">📨 Submit Contact Form</button>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">❓ How to Order?</div>
+      <p>1. Select BGMI or Free Fire tab<br>2. Pick your product & tap "Buy Now"<br>3. Fill your Game ID, Name & Email<br>4. UPI ID is unavailable temporarily, scan QR code only<br>5. Enter transaction ID & submit<br>6. Receive within 5-30 minutes!</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">⚠️ Important Notes</div>
+      <p>• Keep your game open during order<br>• Enter correct Game ID<br>• No refunds after delivery<br>• Contact us within 1 hour for issues</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">✅ Why Choose Us?</div>
+      <p>• Instant delivery (5-30 min)<br>• BGMI UC + Free Fire Diamonds<br>• Lowest prices guaranteed<br>• 10,000+ happy customers<br>• 24/7 support</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-title">📜 Legal Policies</div>
+      <div class="policy-link-list">
+        <a class="policy-link-item" href="terms-and-conditions.html" target="_blank" rel="noopener noreferrer">Terms & Conditions</a>
+        <a class="policy-link-item" href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        <a class="policy-link-item" href="disclaimer.html" target="_blank" rel="noopener noreferrer">Disclaimer</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="bnav-item active" data-page="home" onclick="showPage('home',this)"><span class="bnav-icon">🏠</span>Home</button>
+  <button class="bnav-item" data-page="spin" onclick="showPage('spin',this)"><span class="bnav-icon">🎰</span>Spin</button>
+  <button class="bnav-item" data-page="orders" onclick="showPage('orders',this)"><span class="bnav-icon">📦</span>Orders</button>
+  <button class="bnav-item" data-page="support" onclick="showPage('support',this)"><span class="bnav-icon">💬</span>Support</button>
+  <button class="bnav-item bnav-settings-btn" id="settings-btn" onclick="handleSettingsTap()" aria-label="Settings"><span class="bnav-icon bnav-logo-icon"><img src="assets/logo.png" alt="Settings"></span></button>
+</nav>
+<div class="settings-hint" id="settings-hint" aria-live="polite"></div>
+
+<!-- POLICY CONSENT POPUP -->
+<div class="policy-overlay" id="policy-consent-overlay">
+  <div class="policy-box">
+    <div class="policy-title">Policy Agreement</div>
+    <div class="policy-text">Read all Terms & Conditions, Privacy Policy, and Disclaimer.</div>
+    <div class="policy-links">
+      <a href="terms-and-conditions.html" target="_blank" rel="noopener noreferrer">Terms & Conditions</a>
+      <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+      <a href="disclaimer.html" target="_blank" rel="noopener noreferrer">Disclaimer</a>
+    </div>
+    <button class="submit-btn" onclick="agreePolicies()">I Agree</button>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="overlay" id="pay-overlay">
+  <div class="modal" style="position:relative;">
+    <button class="close-modal" onclick="closePayment()">✕</button>
+    <div class="modal-handle"></div>
+    <div class="modal-title">Complete Purchase 💳</div>
+    <div class="modal-sub">Fill details & pay to get your order</div>
+    <div class="product-summary" id="pay-summary">
+      <div id="pay-thumb-wrap"></div>
+      <div>
+        <div class="product-summary-name" id="pay-name">Product</div>
+        <div class="product-summary-price" id="pay-price">₹0</div>
+        <div id="pay-game-tag"></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">👤 Your Name *</label>
+      <input class="form-input" type="text" id="f-name" placeholder="Enter your full name" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">📧 Email Address *</label>
+      <input class="form-input" type="email" id="f-email" placeholder="Enter your email" />
+    </div>
+    <div class="form-group" id="f-gameid-group">
+      <label class="form-label" id="f-gameid-label">🎮 Game ID *</label>
+      <input class="form-input" type="text" id="f-bgmi" placeholder="Enter your Game ID" />
+    </div>
+    <div class="upi-box">
+      <div class="upi-label">Available Account Balance</div>
+      <div class="upi-id" id="pay-balance-view">₹0</div>
+      <button class="copy-btn" id="pay-balance-btn" onclick="payByBalance()">💼 Pay Using Balance</button>
+    </div>
+    <div class="divider">UPI STATUS</div>
+    <div class="upi-temp-box">
+      <div class="upi-temp-title">UPI ID Unavailable Temporarily</div>
+      <div class="upi-temp-sub">Please use QR payment only right now.</div>
+    </div>
+    <div class="divider">OR SCAN QR CODE</div>
+    <div class="qr-box">
+      <img class="qr-image" id="qr-grid" src="assets/sharedimage.jpg" alt="Payment QR code" onerror="this.onerror=null;this.src='assets/test-qr.svg';" />
+      <div class="qr-label">Scan with any UPI app · Amount: <strong id="qr-amount">₹0</strong></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">📸 UTR / Transaction ID *</label>
+      <input class="form-input" type="text" id="f-utr" placeholder="Enter 12-digit transaction ID" />
+    </div>
+    <button class="submit-btn" id="pay-submit-btn" onclick="submitOrder()">✅ Submit Order</button>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:8px;font-weight:700;">For UPI payment orders, status starts as pending for admin review.</div>
+  </div>
+</div>
+
+<!-- ADD BALANCE MODAL -->
+<div class="overlay" id="add-balance-overlay">
+  <div class="modal" style="position:relative;">
+    <button class="close-modal" onclick="closeAddBalance()">✕</button>
+    <div class="modal-handle"></div>
+    <div class="modal-title">Add Balance Request 💰</div>
+    <div class="modal-sub">After placing request, balance can take up to 1 hour after admin approval.</div>
+    <div class="form-group">
+      <label class="form-label">👤 Your Name *</label>
+      <input class="form-input" type="text" id="ab-name" placeholder="Enter your name" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">📧 Email Address *</label>
+      <input class="form-input" type="email" id="ab-email" placeholder="Enter your email" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">💸 Add Amount (₹) *</label>
+      <input class="form-input" type="number" id="ab-amount" min="100" placeholder="Minimum amount 100" />
+    </div>
+    <div class="divider">UPI STATUS</div>
+    <div class="upi-temp-box">
+      <div class="upi-temp-title">UPI ID Unavailable Temporarily</div>
+      <div class="upi-temp-sub">Please use QR payment only right now.</div>
+    </div>
+    <div class="divider">OR SCAN QR CODE</div>
+    <div class="qr-box">
+      <img class="qr-image" id="ab-qr-grid" src="assets/sharedimage.jpg" alt="Add balance QR code" onerror="this.onerror=null;this.src='assets/test-qr.svg';" />
+      <div class="qr-label">Scan with any UPI app · Amount: <strong id="ab-qr-amount">₹0</strong></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">📸 UTR / Transaction ID *</label>
+      <input class="form-input" type="text" id="ab-utr" placeholder="Enter transaction ID" />
+    </div>
+    <button class="submit-btn with-site-icon" onclick="submitAddBalanceRequest()">✅ Submit Add Balance Request</button>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:8px;font-weight:700;">Add in account can take 1 hour after place order.</div>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-overlay" id="success-overlay">
+  <div class="success-box">
+    <div class="success-icon">🎉</div>
+    <div class="success-title">Order Placed!</div>
+    <div class="success-msg" id="success-msg">Your order has been received!</div>
+    <button class="success-close" onclick="closeSuccess()">Great, Thanks!</button>
+  </div>
+</div>
+
+<!-- CONTACT POPUP -->
+<div class="success-overlay" id="contact-popup-overlay">
+  <div class="success-box">
+    <div class="success-icon">📨</div>
+    <div class="success-title" style="color:var(--primary);">Request Sent</div>
+    <div class="success-msg" id="contact-popup-msg">We will response you within 7 days.</div>
+    <button class="success-close" onclick="closeContactPopup()">OK</button>
+  </div>
+</div>
+
+<!-- WITHDRAW MODAL -->
+<div class="overlay" id="withdraw-overlay">
+  <div class="modal" style="position:relative;">
+    <button class="close-modal" onclick="closeWithdrawForm()">✕</button>
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="withdraw-title">Withdraw UC Request 🏧</div>
+    <div class="modal-sub">Submit your details to place withdrawal request</div>
+
+    <div class="form-group">
+      <label class="form-label" id="w-gameid-label">🎮 BGMI ID *</label>
+      <input class="form-input" type="text" id="w-bgmi" placeholder="Enter your BGMI ID" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">📧 Email Address *</label>
+      <input class="form-input" type="email" id="w-email" placeholder="Enter your email" />
+    </div>
+    <div class="form-group">
+      <label class="form-label" id="withdraw-amount-label">💎 Total Withdraw UC *</label>
+      <input class="form-input" type="number" id="w-uc" min="100" step="1" placeholder="Enter UC amount" />
+      <div style="font-size:12px;color:var(--text-muted);margin-top:6px;" id="withdraw-meta-text">Minimum 100 UC. Available: <strong id="withdraw-available-uc">0 UC</strong></div>
+    </div>
+    <button class="submit-btn" onclick="submitWithdrawRequest()">✅ Submit Withdraw Request</button>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="overlay" id="admin-login-overlay">
+  <div class="modal" style="position:relative;max-height:70vh;border-radius:24px 24px 0 0;">
+    <button class="close-modal" onclick="closeAdminLogin()">✕</button>
+    <div class="modal-handle"></div>
+    <div class="modal-title">Settings Login 🔐</div>
+    <div class="modal-sub">Tap settings icon 4 times and enter password to open admin panel.</div>
+    <div class="form-group">
+      <label class="form-label">Password *</label>
+      <input class="form-input" type="password" id="admin-login-pass" placeholder="Enter admin password" autocomplete="current-password" />
+    </div>
+    <button class="submit-btn" onclick="submitAdminLogin()">🔓 Unlock Settings</button>
+    <div class="spin-admin-msg" id="admin-login-msg"></div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="overlay" id="admin-overlay">
+  <div class="modal" style="position:relative;max-height:95vh;border-radius:24px 24px 0 0;">
+    <button class="close-modal" onclick="closeAdmin()">✕</button>
+    <div class="modal-handle"></div>
+    <div style="font-family:'Baloo 2',sans-serif;font-size:22px;font-weight:800;margin-bottom:4px;">⚙ Admin Panel</div>
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Manage BGMI & Free Fire products</div>
+
+    <!-- game selector for admin -->
+    <div class="admin-game-tabs">
+      <button class="admin-game-tab sel-bgmi" id="admin-tab-bgmi" onclick="switchAdminGame('bgmi')">🎮 BGMI / PUBG</button>
+      <button class="admin-game-tab" id="admin-tab-ff" onclick="switchAdminGame('ff')">🔴 Free Fire</button>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title" id="admin-form-title">➕ Add BGMI Product</div>
+
+      <div class="form-group">
+        <label class="form-label">Product Name *</label>
+        <input class="form-input" type="text" id="a-name" placeholder="e.g. 60 UC Pack" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <input class="form-input" type="text" id="a-desc" placeholder="Short description..." />
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Price (₹) *</label>
+          <input class="form-input" type="number" id="a-price" placeholder="75" />
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Old Price (₹)</label>
+          <input class="form-input" type="number" id="a-oldprice" placeholder="100" />
+        </div>
+      </div>
+
+      <!-- IMAGE UPLOAD -->
+      <div class="form-group">
+        <label class="form-label">📷 Product Image <span style="color:var(--text-muted);font-weight:500;">(recommended)</span></label>
+        <div class="img-upload-area" id="img-upload-area"
+          ondragover="event.preventDefault();this.classList.add('drag')"
+          ondragleave="this.classList.remove('drag')"
+          ondrop="handleDrop(event)">
+          <input type="file" accept="image/*" id="a-img-file" onchange="handleImgUpload(this)" />
+          <div id="img-upload-placeholder">
+            <div class="img-upload-icon">🖼️</div>
+            <div class="img-upload-text">Tap to upload image</div>
+            <div class="img-upload-sub">JPG, PNG, WebP · Max 5MB</div>
+          </div>
+          <div id="img-preview-container" style="display:none;pointer-events:none;">
+            <img id="img-preview" style="width:100%;max-height:150px;object-fit:cover;border-radius:10px;border:1.5px solid var(--border);display:block;" src="" alt="Preview" />
+          </div>
+        </div>
+        <button id="img-remove-btn" onclick="removeImage()" style="display:none;margin-top:8px;background:var(--danger);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;">🗑 Remove Image</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Emoji / Icon <span style="color:var(--text-muted);font-weight:500;">(fallback)</span></label>
+        <input class="form-input" type="text" id="a-icon" placeholder="e.g. 💎 or 👑" maxlength="4" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Card Background <span style="color:var(--text-muted);font-weight:500;">(if no image)</span></label>
+        <div class="color-picker-row" id="color-picker">
+          <div class="color-opt selected" data-color="#fff3e0" onclick="pickColor(this)"><span style="background:#ff9800;width:16px;height:16px;border-radius:4px;display:inline-block;"></span>Orange</div>
+          <div class="color-opt" data-color="#e8f5e9" onclick="pickColor(this)"><span style="background:#4caf50;width:16px;height:16px;border-radius:4px;display:inline-block;"></span>Green</div>
+          <div class="color-opt" data-color="#e3f2fd" onclick="pickColor(this)"><span style="background:#2196f3;width:16px;height:16px;border-radius:4px;display:inline-block;"></span>Blue</div>
+          <div class="color-opt" data-color="#ffe4e6" onclick="pickColor(this)"><span style="background:#e11d48;width:16px;height:16px;border-radius:4px;display:inline-block;"></span>Red/FF</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-input" id="a-cat">
+          <!-- filled by JS based on game tab -->
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Tag / Badge</label>
+        <div class="tag-options">
+          <div class="tag-opt selected" data-tag="sale" onclick="pickTag(this)">🔴 SALE</div>
+          <div class="tag-opt" data-tag="hot" onclick="pickTag(this)">🔥 HOT</div>
+          <div class="tag-opt" data-tag="new" onclick="pickTag(this)">✨ NEW</div>
+          <div class="tag-opt" data-tag="royal" onclick="pickTag(this)">👑 ROYAL</div>
+          <div class="tag-opt" data-tag="ff" onclick="pickTag(this)">🔴 FF</div>
+          <div class="tag-opt" data-tag="" onclick="pickTag(this)">None</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Priority (higher = shown first) — <strong id="priority-val">5</strong></label>
+        <input type="range" min="1" max="10" value="5" class="priority-slider" id="a-priority" oninput="document.getElementById('priority-val').textContent=this.value" />
+      </div>
+
+      <button class="add-btn with-site-icon" id="admin-add-btn" onclick="addProduct()">➕ Add BGMI Product</button>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title">🎰 Spinner Settings</div>
+      <div class="admin-game-tabs">
+        <button class="admin-game-tab sel-bgmi" id="admin-spin-tab-bgmi" onclick="switchAdminSpinnerGame('bgmi')">🎮 BGMI Spinner</button>
+        <button class="admin-game-tab" id="admin-spin-tab-ff" onclick="switchAdminSpinnerGame('ff')">🔴 FF Spinner</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Paid Spin Price (₹)</label>
+        <input class="form-input" type="number" id="spin-price-input" min="1" value="10" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" id="spin-first-win-label">First Spin Fixed Win (UC)</label>
+        <input class="form-input" type="number" id="spin-first-win-input" min="1" value="25" />
+      </div>
+      <div class="spin-admin-grid">
+        <div class="form-group"><label class="form-label spin-reward-label">Section 1 (UC)</label><input class="form-input spin-reward-input" type="number" id="spin-r-0" min="1" value="10" /></div>
+        <div class="form-group"><label class="form-label spin-reward-label">Section 2 (UC)</label><input class="form-input spin-reward-input" type="number" id="spin-r-1" min="1" value="15" /></div>
+        <div class="form-group"><label class="form-label spin-reward-label">Section 3 (UC)</label><input class="form-input spin-reward-input" type="number" id="spin-r-2" min="1" value="20" /></div>
+        <div class="form-group"><label class="form-label spin-reward-label">Section 4 (UC)</label><input class="form-input spin-reward-input" type="number" id="spin-r-3" min="1" value="30" /></div>
+        <div class="form-group"><label class="form-label spin-reward-label">Section 5 (UC)</label><input class="form-input spin-reward-input" type="number" id="spin-r-4" min="1" value="40" /></div>
+        <div class="form-group"><label class="form-label spin-reward-label">Section 6 (UC)</label><input class="form-input spin-reward-input" type="number" id="spin-r-5" min="1" value="60" /></div>
+        <div class="form-group"><label class="form-label spin-reward-label">Section 7 (UC)</label><input class="form-input spin-reward-input" type="number" id="spin-r-6" min="1" value="80" /></div>
+        <div class="form-group"><label class="form-label spin-reward-label">Section 8 (UC)</label><input class="form-input spin-reward-input" type="number" id="spin-r-7" min="1" value="100" /></div>
+      </div>
+      <div class="form-group" style="margin-top:10px;">
+        <label class="form-label">Win Priority Weight (higher = higher chance)</label>
+      </div>
+      <div class="spin-admin-grid">
+        <div class="form-group"><label class="form-label">Section 1 Weight</label><input class="form-input" type="number" id="spin-w-0" min="1" value="1" /></div>
+        <div class="form-group"><label class="form-label">Section 2 Weight</label><input class="form-input" type="number" id="spin-w-1" min="1" value="1" /></div>
+        <div class="form-group"><label class="form-label">Section 3 Weight</label><input class="form-input" type="number" id="spin-w-2" min="1" value="1" /></div>
+        <div class="form-group"><label class="form-label">Section 4 Weight</label><input class="form-input" type="number" id="spin-w-3" min="1" value="1" /></div>
+        <div class="form-group"><label class="form-label">Section 5 Weight</label><input class="form-input" type="number" id="spin-w-4" min="1" value="1" /></div>
+        <div class="form-group"><label class="form-label">Section 6 Weight</label><input class="form-input" type="number" id="spin-w-5" min="1" value="1" /></div>
+        <div class="form-group"><label class="form-label">Section 7 Weight</label><input class="form-input" type="number" id="spin-w-6" min="1" value="1" /></div>
+        <div class="form-group"><label class="form-label">Section 8 Weight</label><input class="form-input" type="number" id="spin-w-7" min="1" value="1" /></div>
+      </div>
+      <button class="add-btn" onclick="saveSpinnerSettings()">💾 Save Spinner Settings</button>
+      <div class="spin-admin-msg" id="spin-admin-msg"></div>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title">🧾 Payment QR Settings</div>
+      <div class="form-group">
+        <label class="form-label">Upload New QR Image (used everywhere)</label>
+        <input class="form-input" type="file" id="admin-qr-file" accept="image/*" onchange="handleAdminQrUpload(this)" />
+      </div>
+      <div class="form-group" style="margin-top:8px;">
+        <img id="admin-qr-preview" src="assets/test-qr.svg" alt="QR Preview" style="width:170px;max-width:100%;border:1.5px solid var(--border);border-radius:10px;display:block;margin:0 auto;background:#fff;" />
+      </div>
+      <button class="add-btn" id="save-qr-btn" onclick="savePaymentQrImage()">💾 Save QR For All Payments</button>
+      <div class="spin-admin-msg" id="save-qr-msg"></div>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title">🔐 Change Admin Password</div>
+      <div class="form-group">
+        <label class="form-label">Current Password *</label>
+        <input class="form-input" type="password" id="admin-current-pass" placeholder="Enter current password" autocomplete="current-password" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">New Password *</label>
+        <input class="form-input" type="password" id="admin-new-pass" placeholder="Enter new password" autocomplete="new-password" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm New Password *</label>
+        <input class="form-input" type="password" id="admin-confirm-pass" placeholder="Confirm new password" autocomplete="new-password" />
+      </div>
+      <button class="add-btn" onclick="changeAdminPassword()">🔄 Update Password</button>
+      <button class="add-btn" style="margin-top:8px;background:#0f172a;" onclick="lockAdminSession()">🔒 Lock Settings</button>
+      <div class="spin-admin-msg" id="admin-pass-msg"></div>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title">📦 All Products (<span id="prod-count">0</span>)</div>
+      <div id="admin-prod-list"></div>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title">🧾 User Transactions (<span id="admin-order-count">0</span>)</div>
+      <div id="admin-order-list"></div>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title">📩 Contact Requests (<span id="admin-contact-count">0</span>)</div>
+      <div class="admin-contact-note" id="admin-contact-note"></div>
+      <div id="admin-contact-list"></div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

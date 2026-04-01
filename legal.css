@@ -1,0 +1,102 @@
+:root{
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --text:#1e293b;
+  --muted:#64748b;
+  --border:#e2e8f0;
+  --primary:#f97316;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+.wrap{max-width:860px;margin:0 auto;padding:18px 14px 36px;}
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:12px;
+}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-icon{
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  border:1.5px solid var(--border);
+  overflow:hidden;
+  background:#0f172a;
+}
+.brand-icon img{width:100%;height:100%;object-fit:cover;display:block;}
+.brand h1{font-size:20px;font-weight:900;line-height:1.1;color:var(--primary);}
+.brand p{font-size:11px;color:var(--muted);font-weight:700;margin-top:2px;}
+.back{
+  text-decoration:none;
+  color:#fff;
+  background:var(--primary);
+  border-radius:10px;
+  padding:10px 12px;
+  font-size:12px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.card{
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:16px;
+  padding:18px 16px;
+  box-shadow:0 6px 20px rgba(0,0,0,.06);
+}
+.title{font-size:24px;font-weight:900;margin-bottom:8px;}
+.updated{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:14px;}
+.section{margin-bottom:14px;}
+.section h2{font-size:16px;font-weight:900;margin-bottom:6px;}
+.section p{font-size:13px;line-height:1.75;color:var(--text);}
+.warn{
+  border:1.5px solid #fca5a5;
+  background:#fef2f2;
+  color:#7f1d1d;
+  border-radius:12px;
+  padding:12px;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.6;
+  margin-bottom:14px;
+}
+.links{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid var(--border);
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.links a{
+  text-decoration:none;
+  border:1.5px solid var(--border);
+  background:#fff;
+  color:var(--text);
+  border-radius:10px;
+  padding:8px 10px;
+  font-size:12px;
+  font-weight:800;
+}
+.legal-footer{
+  margin-top:14px;
+  border-top:1px solid var(--border);
+  padding-top:12px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.legal-footer p{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700;
+}
+@media (max-width:560px){
+  .top{flex-direction:column;align-items:flex-start;}
+}

@@ -1,0 +1,6 @@
+Options -Indexes
+
+<FilesMatch "^(store_data|contact_requests)\.json$">
+  Require all denied
+</FilesMatch>
+
